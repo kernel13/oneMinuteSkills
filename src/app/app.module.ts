@@ -7,6 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FirebaseService } from './services/firebase.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +15,7 @@ import { FirebaseService } from './services/firebase.service';
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FirebaseService,
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })
