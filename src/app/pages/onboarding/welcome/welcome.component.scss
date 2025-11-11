@@ -1,0 +1,131 @@
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+
+  ion-header {
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --color: white;
+  }
+}
+
+.welcome-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.icon-container {
+  margin-bottom: 2rem;
+  animation: fadeInScale 0.6s ease-out;
+}
+
+.welcome-icon {
+  font-size: 4rem;
+  color: #667eea;
+}
+
+.welcome-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.welcome-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.features-list {
+  width: 100%;
+  max-width: 400px;
+  margin: 2rem 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #f0f1f5;
+    transform: translateX(4px);
+  }
+
+  ion-icon {
+    font-size: 1.5rem;
+    color: #667eea;
+    margin-right: 1rem;
+    min-width: 30px;
+  }
+}
+
+.feature-text {
+  text-align: left;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    color: #333;
+  }
+
+  p {
+    font-size: 0.875rem;
+    margin: 0;
+    color: #666;
+  }
+}
+
+.action-footer {
+  padding: 1.5rem;
+  background: white;
+  border-top: 1px solid #e0e0e0;
+
+  ion-button {
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 480px) {
+  .welcome-content {
+    padding: 1.5rem;
+  }
+
+  .welcome-title {
+    font-size: 1.5rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .feature-item {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+  }
+}

@@ -1,0 +1,105 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Choose Your Topics</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Loading topics...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <ion-icon name="alert-circle" color="danger"></ion-icon>
+    <h2>Oops!</h2>
+    <p>{{ error }}</p>
+    <ion-button (click)="loadTopics()" fill="solid" color="primary">
+      Try Again
+    </ion-button>
+  </div>
+
+  <!-- Topics List -->
+  <div *ngIf="!loading && !error" class="topics-content">
+    <!-- Info Section -->
+    <div class="info-section">
+      <h2>Select at least {{ MIN_TOPICS_REQUIRED }} topics that interest you</h2>
+      <p>We'll personalize your learning experience based on your selections</p>
+    </div>
+
+    <!-- Topics Grid -->
+    <div class="topics-grid">
+      <div
+        *ngFor="let topic of topics"
+        class="topic-card"
+        [class.selected]="isSelected(topic.id)"
+        (click)="toggleTopic(topic.id)"
+      >
+        <div class="topic-card-header" [style.background-color]="topic.color">
+          <ion-icon [name]="topic.icon"></ion-icon>
+        </div>
+        <div class="topic-card-content">
+          <h3>{{ topic.name }}</h3>
+          <p class="category">{{ getCategoryLabel(topic.category) }}</p>
+          <p class="description">{{ topic.description }}</p>
+          <p class="lessons">{{ topic.lessonCount }} lessons</p>
+        </div>
+        <div *ngIf="isSelected(topic.id)" class="check-mark">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Selected Topics Summary -->
+    <div *ngIf="selectedTopics.length > 0" class="selected-summary">
+      <h3>Selected Topics ({{ selectedTopicIds.size }}/{{ MIN_TOPICS_REQUIRED }})</h3>
+      <div class="selected-tags">
+        <div *ngFor="let topic of selectedTopics" class="tag">
+          {{ topic.name }}
+          <ion-icon
+            name="close-circle"
+            (click)="toggleTopic(topic.id)"
+            aria-label="Remove topic"
+          ></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Message -->
+    <div class="status-message" [class.ready]="canProceed">
+      <ion-icon [name]="canProceed ? 'checkmark-circle' : 'information-circle'"></ion-icon>
+      <span>{{ minTopicsMessage }}</span>
+    </div>
+  </div>
+</ion-content>
+
+<!-- Action Footer -->
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer-content">
+      <ion-button
+        expand="block"
+        fill="clear"
+        color="medium"
+        (click)="goBack()"
+        [disabled]="loading"
+      >
+        Back
+      </ion-button>
+      <ion-button
+        expand="block"
+        fill="solid"
+        color="primary"
+        (click)="completeOnboarding()"
+        [disabled]="!canProceed || loading"
+      >
+        Continue
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
