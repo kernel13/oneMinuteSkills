@@ -1,0 +1,7 @@
+{
+  "name": "oneMinuteSkills",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
