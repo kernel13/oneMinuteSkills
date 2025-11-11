@@ -1,16 +1,22 @@
 /**
  * Topic Model
  * Represents a skill/knowledge topic that users can learn
+ *
+ * Note: category field stores SkillCategory string values from the database,
+ * not TopicCategory enum values. This aligns with how topics are generated
+ * from skill categories.
  */
 export interface Topic {
   id: string;
   name: string;
   description: string;
-  category: TopicCategory;
+  category: string; // Stores SkillCategory values from skill.model
   icon?: string;
   color?: string;
-  difficulty: DifficultyLevel;
-  lessonCount: number;
+  lessonsCount: number; // Number of lessons/skills in this topic
+  isActive: boolean; // Whether topic is currently active
+  sortOrder: number; // Display order for topics
+  isFeatured: boolean; // Whether topic is featured on homepage
   createdAt: Date;
   updatedAt: Date;
 }
@@ -103,9 +109,10 @@ export function createTopic(
   id: string,
   name: string,
   description: string,
-  category: TopicCategory,
-  difficulty: DifficultyLevel = DifficultyLevel.BEGINNER,
-  lessonCount: number = 0
+  category: string,
+  lessonsCount: number = 0,
+  icon?: string,
+  color?: string
 ): Topic {
   const now = new Date();
   return {
@@ -113,37 +120,39 @@ export function createTopic(
     name,
     description,
     category,
-    difficulty,
-    lessonCount,
+    icon,
+    color,
+    lessonsCount,
+    isActive: true,
+    sortOrder: 0,
+    isFeatured: false,
     createdAt: now,
     updatedAt: now,
-    ...TOPIC_CATEGORIES_CONFIG[category],
   };
 }
 
 /**
  * Get category display label
+ * Note: Since topics now use SkillCategory strings, this returns the category as-is
  */
-export function getCategoryLabel(category: TopicCategory): string {
-  return TOPIC_CATEGORIES_CONFIG[category]?.label || category;
+export function getCategoryLabel(category: string): string {
+  return category;
 }
 
 /**
- * Get category icon
+ * Sort topics by sortOrder, then by name
  */
-export function getCategoryIcon(category: TopicCategory): string | undefined {
-  return TOPIC_CATEGORIES_CONFIG[category]?.icon;
+export function sortTopics(topics: Topic[]): Topic[] {
+  return [...topics].sort((a, b) => {
+    if (a.sortOrder !== b.sortOrder) {
+      return a.sortOrder - b.sortOrder;
+    }
+    return a.name.localeCompare(b.name);
+  });
 }
 
 /**
- * Get category color
- */
-export function getCategoryColor(category: TopicCategory): string | undefined {
-  return TOPIC_CATEGORIES_CONFIG[category]?.color;
-}
-
-/**
- * Sort topics by name
+ * Sort topics by name only
  */
 export function sortTopicsByName(topics: Topic[]): Topic[] {
   return [...topics].sort((a, b) => a.name.localeCompare(b.name));
@@ -152,8 +161,8 @@ export function sortTopicsByName(topics: Topic[]): Topic[] {
 /**
  * Group topics by category
  */
-export function groupTopicsByCategory(topics: Topic[]): Map<TopicCategory, Topic[]> {
-  const grouped = new Map<TopicCategory, Topic[]>();
+export function groupTopicsByCategory(topics: Topic[]): Map<string, Topic[]> {
+  const grouped = new Map<string, Topic[]>();
 
   topics.forEach((topic) => {
     if (!grouped.has(topic.category)) {
@@ -166,8 +175,15 @@ export function groupTopicsByCategory(topics: Topic[]): Map<TopicCategory, Topic
 }
 
 /**
- * Filter topics by difficulty level
+ * Filter active topics only
  */
-export function filterTopicsByDifficulty(topics: Topic[], difficulty: DifficultyLevel): Topic[] {
-  return topics.filter((topic) => topic.difficulty === difficulty);
+export function filterActiveTopics(topics: Topic[]): Topic[] {
+  return topics.filter((topic) => topic.isActive);
+}
+
+/**
+ * Filter featured topics only
+ */
+export function filterFeaturedTopics(topics: Topic[]): Topic[] {
+  return topics.filter((topic) => topic.isFeatured);
 }

@@ -47,7 +47,7 @@
           <h3>{{ topic.name }}</h3>
           <p class="category">{{ getCategoryLabel(topic.category) }}</p>
           <p class="description">{{ topic.description }}</p>
-          <p class="lessons">{{ topic.lessonCount }} lessons</p>
+          <p class="lessons">{{ topic.lessonsCount }} lessons</p>
         </div>
         <div *ngIf="isSelected(topic.id)" class="check-mark">
           <ion-icon name="checkmark-circle"></ion-icon>

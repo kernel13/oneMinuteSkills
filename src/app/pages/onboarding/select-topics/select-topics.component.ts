@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { IonicModule } from '@ionic/angular';
 import { TopicService } from '../../../services/topic.service';
 import { AuthService } from '../../../services/auth.service';
-import { Topic, TopicCategory, TOPIC_CATEGORIES_CONFIG } from '../../../models/topic.model';
+import { Topic, getCategoryLabel } from '../../../models/topic.model';
 
 /**
  * Select Topics Component
@@ -69,8 +69,9 @@ export class SelectTopicsComponent implements OnInit, OnDestroy {
 
   /**
    * Load topics from service
+   * Public to allow retry from template error state
    */
-  private async loadTopics(): Promise<void> {
+  async loadTopics(): Promise<void> {
     try {
       this.loading = true;
       this.error = null;
@@ -109,8 +110,8 @@ export class SelectTopicsComponent implements OnInit, OnDestroy {
   /**
    * Get category label for display
    */
-  getCategoryLabel(category: TopicCategory): string {
-    return TOPIC_CATEGORIES_CONFIG[category]?.label || category;
+  getCategoryLabel(category: string): string {
+    return getCategoryLabel(category);
   }
 
   /**

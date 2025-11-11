@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { FirebaseService } from './firebase.service';
-import { Topic, TopicCategory } from '../models/topic.model';
+import { Topic } from '../models/topic.model';
 import {
   Firestore,
   collection,
@@ -67,6 +67,7 @@ export class TopicService {
       const topics: Topic[] = [];
       snapshot.forEach((doc) => {
         const data = doc.data() as Topic;
+        data.id = doc.id; // Set the document ID as the topic id
         // Convert Firestore timestamps to Date objects
         if (data.createdAt && typeof data.createdAt === 'object') {
           data.createdAt = (data.createdAt as any).toDate();
@@ -90,9 +91,9 @@ export class TopicService {
   }
 
   /**
-   * Get topics by category
+   * Get topics by category (SkillCategory string)
    */
-  async getTopicsByCategory(category: TopicCategory): Promise<Topic[]> {
+  async getTopicsByCategory(category: string): Promise<Topic[]> {
     try {
       const firestore = this.firebaseService.getFirestore();
       if (!firestore) {
@@ -108,6 +109,7 @@ export class TopicService {
 
       snapshot.forEach((doc) => {
         const data = doc.data() as Topic;
+        data.id = doc.id; // Set the document ID as the topic id
         // Convert Firestore timestamps to Date objects
         if (data.createdAt && typeof data.createdAt === 'object') {
           data.createdAt = (data.createdAt as any).toDate();
@@ -140,6 +142,7 @@ export class TopicService {
 
       if (snapshot.exists()) {
         const data = snapshot.data() as Topic;
+        data.id = snapshot.id; // Set the document ID as the topic id
         // Convert Firestore timestamps to Date objects
         if (data.createdAt && typeof data.createdAt === 'object') {
           data.createdAt = (data.createdAt as any).toDate();
