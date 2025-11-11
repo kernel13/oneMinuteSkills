@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { FirebaseService } from './services/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
   standalone: false,
 })
-export class AppComponent {
-  constructor() {}
+export class AppComponent implements OnInit {
+  private firebaseService = inject(FirebaseService);
+
+  ngOnInit(): void {
+    this.initializeApp();
+  }
+
+  /**
+   * Initialize app on startup
+   */
+  private async initializeApp(): Promise<void> {
+    try {
+      await this.firebaseService.initialize();
+      console.log('[AppComponent] App initialized successfully');
+    } catch (error) {
+      console.error('[AppComponent] App initialization error:', error);
+    }
+  }
 }

@@ -3,7 +3,22 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyDx_TpFc-XQz5xZ_9Z_9Z_9Z_9Z_9Z_9Z_',
+    authDomain: 'oneminute-skill-dev.firebaseapp.com',
+    projectId: 'oneminute-skill-dev',
+    storageBucket: 'oneminute-skill-dev.appspot.com',
+    messagingSenderId: '123456789012',
+    appId: '1:123456789012:web:abcdef1234567890'
+  },
+  useEmulator: true,
+  emulator: {
+    authPort: 9099,
+    firestorePort: 8080,
+    storagePort: 9199,
+    host: '127.0.0.1'
+  }
 };
 
 /*
