@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyDx_TpFc-XQz5xZ_9Z_9Z_9Z_9Z_9Z_9Z_',
+    apiKey: 'demo-api-key',
     authDomain: 'oneminute-skill-dev.firebaseapp.com',
     projectId: 'oneminute-skill-dev',
     storageBucket: 'oneminute-skill-dev.appspot.com',
@@ -16,8 +16,10 @@ export const environment = {
   emulator: {
     authPort: 9099,
     firestorePort: 8080,
-    storagePort: 9199,
-    host: '127.0.0.1'
+    storagePort: 9199
+    // Host is determined dynamically based on platform in FirebaseService
+    // Android emulator uses: 10.0.2.2
+    // iOS & Web use: 127.0.0.1
   }
 };
 

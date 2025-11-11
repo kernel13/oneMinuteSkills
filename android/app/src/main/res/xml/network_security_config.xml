@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!--
+        Development-only configuration to allow HTTP connections to Firebase emulator
+        This enables cleartext traffic ONLY to localhost and Android emulator host
+        IMPORTANT: Do NOT use in production - configure differently for release builds
+    -->
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Allow cleartext to localhost (iOS/Web emulator host) -->
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+
+        <!-- Allow cleartext to Android emulator host (special alias for dev machine) -->
+        <domain includeSubdomains="true">10.0.2.2</domain>
+    </domain-config>
+
+    <!--
+        Base configuration: Require HTTPS for all other domains
+        This ensures production Firebase and other APIs use secure connections
+    -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

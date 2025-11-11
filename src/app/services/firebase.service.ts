@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore';
 import { environment } from '../../environments/environment';
 import { getStorage, connectStorageEmulator, FirebaseStorage } from 'firebase/storage';
+import { Platform } from '@ionic/angular';
 
 /**
  * Firebase Service
@@ -26,6 +27,8 @@ export class FirebaseService {
   private firestore: Firestore | null = null;
   private storage: FirebaseStorage | null = null;
   private initialized = false;
+
+  constructor(private platform: Platform) {}
 
   /**
    * Initialize Firebase
@@ -43,10 +46,19 @@ export class FirebaseService {
       // Initialize Auth
       this.auth = initializeAuth(app);
 
-      // Initialize Firestore
-      this.firestore = initializeFirestore(app, {
-        cacheSizeBytes: 50 * 1024 * 1024, // 50MB cache
-      });
+      // Initialize Firestore with environment-specific settings
+      if (environment.useEmulator && !environment.production) {
+        // Emulator mode: disable cache to prevent offline mode issues
+        // Use long polling for better emulator compatibility
+        this.firestore = initializeFirestore(app, {
+          experimentalForceLongPolling: true,
+        });
+      } else {
+        // Production mode: enable cache for performance
+        this.firestore = initializeFirestore(app, {
+          cacheSizeBytes: 50 * 1024 * 1024, // 50MB cache
+        });
+      }
 
       // Initialize Storage
       this.storage = getStorage(app);
@@ -65,12 +77,29 @@ export class FirebaseService {
   }
 
   /**
+   * Get the correct emulator host based on platform
+   * Android emulator: 10.0.2.2 (special alias for host machine)
+   * iOS/Web: 127.0.0.1 (localhost)
+   * See: https://firebase.google.com/docs/emulator-suite/connect_auth
+   */
+  private getEmulatorHost(): string {
+    if (this.platform.is('android')) {
+      console.log('[FirebaseService] Using Android emulator host: 10.0.2.2');
+      return '10.0.2.2';
+    }
+    // iOS, web, and other platforms use localhost
+    console.log('[FirebaseService] Using localhost for emulator: 127.0.0.1');
+    return '127.0.0.1';
+  }
+
+  /**
    * Connect to Firebase emulator
    * Only for development/testing
    */
   private connectToEmulator(): void {
     try {
-      const { host, authPort, firestorePort, storagePort } = environment.emulator;
+      const { authPort, firestorePort, storagePort } = environment.emulator;
+      const host = this.getEmulatorHost();
       const emulatorUrl = `http://${host}`;
 
       // Connect Auth to emulator
@@ -78,14 +107,16 @@ export class FirebaseService {
         connectAuthEmulator(this.auth, `${emulatorUrl}:${authPort}`, {
           disableWarnings: true,
         });
-        console.log(`[FirebaseService] Auth connected to emulator at port ${authPort}`);
+        console.log(
+          `[FirebaseService] Auth connected to emulator at ${host}:${authPort}`
+        );
       }
 
       // Connect Firestore to emulator
-      if (this.firestore && !this.isFirestoreEmulatorConnected()) {
+      if (this.firestore) {
         connectFirestoreEmulator(this.firestore, host, firestorePort);
         console.log(
-          `[FirebaseService] Firestore connected to emulator at port ${firestorePort}`
+          `[FirebaseService] Firestore connected to emulator at ${host}:${firestorePort}`
         );
       }
 
@@ -93,7 +124,7 @@ export class FirebaseService {
       if (this.storage && !this.isStorageEmulatorConnected()) {
         connectStorageEmulator(this.storage, host, storagePort);
         console.log(
-          `[FirebaseService] Storage connected to emulator at port ${storagePort}`
+          `[FirebaseService] Storage connected to emulator at ${host}:${storagePort}`
         );
       }
     } catch (error) {
@@ -107,14 +138,6 @@ export class FirebaseService {
   private isAuthEmulatorConnected(): boolean {
     if (!this.auth) return false;
     return (this.auth as any).emulatorConfig !== null;
-  }
-
-  /**
-   * Check if Firestore emulator is already connected
-   */
-  private isFirestoreEmulatorConnected(): boolean {
-    if (!this.firestore) return false;
-    return (this.firestore as any)._databaseId?.database === '(default)';
   }
 
   /**
