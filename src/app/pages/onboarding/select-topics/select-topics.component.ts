@@ -115,7 +115,7 @@ export class SelectTopicsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Complete onboarding and navigate to main app
+   * Complete topic selection and navigate to notification setup
    */
   async completeOnboarding(): Promise<void> {
     try {
@@ -124,11 +124,10 @@ export class SelectTopicsComponent implements OnInit, OnDestroy {
       // Update user profile with selected topics
       await this.authService.updateUserProfile({
         selectedTopics: selectedTopicIds,
-        onboardingComplete: true,
       });
 
-      // Navigate to main app
-      await this.router.navigate(['/tabs']);
+      // Navigate to notification setup (final step)
+      await this.router.navigate(['/onboarding/notifications']);
     } catch (error) {
       this.error = error instanceof Error ? error.message : 'Failed to complete onboarding';
       console.error('[SelectTopicsComponent] Error completing onboarding:', error);

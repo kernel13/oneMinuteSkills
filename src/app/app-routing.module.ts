@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { OnboardingGuard } from './guards/onboarding.guard';
 import { OnboardingResolver } from './guards/onboarding.resolver';
+import { MainAppGuard } from './guards/main-app.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate: [MainAppGuard]
   },
   {
     path: '',
