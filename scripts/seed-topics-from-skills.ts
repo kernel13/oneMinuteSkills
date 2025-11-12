@@ -17,10 +17,10 @@ import * as admin from 'firebase-admin';
 import { SkillCategory } from '../src/app/models/skill.model';
 
 // Initialize Firebase Admin
-const projectId = process.env.FIREBASE_PROJECT_ID || 'oneminute-skill-dev';
+const projectId = process.env['FIREBASE_PROJECT_ID'] || 'oneminute-skill-dev';
 
-if (process.env.FIRESTORE_EMULATOR_HOST) {
-  console.log('🔧 Using Firestore Emulator:', process.env.FIRESTORE_EMULATOR_HOST);
+if (process.env['FIRESTORE_EMULATOR_HOST']) {
+  console.log('🔧 Using Firestore Emulator:', process.env['FIRESTORE_EMULATOR_HOST']);
   admin.initializeApp({ projectId });
 } else {
   console.log('📝 Using production Firebase');
