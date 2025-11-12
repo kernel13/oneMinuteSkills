@@ -1,0 +1,109 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Daily Reminders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="notification-container">
+  <div class="notification-content">
+    <!-- Icon -->
+    <div class="icon-container">
+      <ion-icon name="notifications" class="notification-icon"></ion-icon>
+    </div>
+
+    <!-- Title -->
+    <h1 class="notification-title">Stay on Track</h1>
+
+    <p class="notification-subtitle">
+      Get daily reminders to complete your lesson and maintain your streak
+    </p>
+
+    <!-- Notification Card -->
+    <div class="notification-card">
+      <!-- Toggle Switch -->
+      <div class="toggle-row">
+        <div class="toggle-label">
+          <h3>Enable Daily Reminders</h3>
+          <p>Get notified at your preferred time</p>
+        </div>
+        <ion-toggle
+          [(ngModel)]="notificationsEnabled"
+          color="primary"
+          (ionChange)="toggleNotifications()"
+        ></ion-toggle>
+      </div>
+
+      <!-- Time Picker (shown when enabled) -->
+      <div *ngIf="notificationsEnabled" class="time-picker-section">
+        <label for="reminder-time">Reminder Time</label>
+        <ion-datetime-button datetime="reminder-datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="reminder-datetime"
+              [(ngModel)]="reminderTime"
+              presentation="time"
+              minuteValues="0,15,30,45"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+
+        <div class="time-display">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>Reminder at {{ reminderTime }}</span>
+        </div>
+      </div>
+
+      <!-- Skip Message -->
+      <div *ngIf="!notificationsEnabled" class="skip-message">
+        <ion-icon name="information-circle"></ion-icon>
+        <p>You can enable reminders anytime in your settings</p>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-box">
+      <ion-icon name="checkmark-circle"></ion-icon>
+      <div>
+        <h4>Perfect!</h4>
+        <p>Customizing your learning experience</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Footer -->
+  <div class="action-footer">
+    <ion-button
+      expand="block"
+      shape="round"
+      size="large"
+      color="primary"
+      (click)="completeOnboarding()"
+      *ngIf="notificationsEnabled"
+    >
+      Complete Setup
+    </ion-button>
+
+    <div *ngIf="!notificationsEnabled" class="dual-buttons">
+      <ion-button
+        expand="block"
+        shape="round"
+        size="large"
+        color="secondary"
+        fill="outline"
+        (click)="skipNotifications()"
+      >
+        Skip
+      </ion-button>
+      <ion-button
+        expand="block"
+        shape="round"
+        size="large"
+        color="primary"
+        (click)="completeOnboarding()"
+      >
+        Continue
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
