@@ -31,11 +31,10 @@ export class OnboardingResolver implements Resolve<User | null> {
     return this.authService.currentUser$.pipe(
       take(1),
       tap((user) => {
-        // Preload topics while user is being displayed
+        // Preload topics while user is being displayed (fire and forget)
         if (user) {
-          this.topicService.loadAllTopics().catch((error) => {
-            console.error('[OnboardingResolver] Failed to load topics:', error);
-          });
+          // Call loadAllTopics as a side effect - TopicService handles errors internally
+          void this.topicService.loadAllTopics();
         }
       }),
       catchError((error) => {

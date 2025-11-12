@@ -10,12 +10,15 @@ describe('MainAppGuard', () => {
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let mockRouter: jasmine.SpyObj<Router>;
   let currentUserSubject: BehaviorSubject<User | null>;
+  let authInitializedSubject: BehaviorSubject<boolean>;
 
   beforeEach(() => {
     currentUserSubject = new BehaviorSubject<User | null>(null);
+    authInitializedSubject = new BehaviorSubject<boolean>(true);
 
     mockAuthService = jasmine.createSpyObj('AuthService', [], {
       currentUser$: currentUserSubject.asObservable(),
+      authInitialized$: authInitializedSubject.asObservable(),
     });
 
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);

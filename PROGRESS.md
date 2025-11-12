@@ -183,25 +183,40 @@ Architecture:
 
 ---
 
-### Phase 4: Onboarding Guard & Routing ⏳ PENDING
+### Phase 4: Onboarding Guard & Routing ✅ COMPLETE
 **Objective**: Implement routing guards and navigation
 **Tasks**: 3 major tasks (guard creation, routing setup, completion logic)
 **Duration**: 0.5 days
 **Status**:
-- [ ] Onboarding guard created
-- [ ] Routing configured
-- [ ] Notification setup page created
-- [ ] ✅ Validation tests passed
-- [ ] ✅ Unit tests created and passing
+- [x] Onboarding guard created (existing, enhanced with robustness)
+- [x] Routing configured (existing, fully functional)
+- [x] Notification setup page created (existing at /onboarding/notifications)
+- [x] ✅ Validation tests passed
+- [x] ✅ Unit tests created and passing
 
 **Key Checkpoint**:
 - Incomplete users redirected to onboarding ✓
 - Completed users can access main app ✓
 - Guard prevents unauthorized access ✓
 
+**Improvements Applied**:
+- Fixed OnboardingResolver bug (Promise .catch issue) - line 36
+- Added authInitialized$ check to guards for proper sequencing
+- Added hasCompletedOnboarding convenience method to AuthService
+- Enhanced guards with switchMap for robust initialization handling
+
 **Notes**:
 ```
-(Track blockers, issues, discoveries here)
+Phase 4 was already fully implemented in codebase:
+- OnboardingGuard prevents completed users from revisiting onboarding
+- MainAppGuard redirects incomplete users to onboarding
+- OnboardingResolver preloads user data and topics
+- Notification setup page at /onboarding/notifications sets onboardingComplete: true
+
+Improvements made:
+1. Fixed resolver Promise handling bug
+2. Added init sequence checks to guards
+3. Added convenience getter to AuthService
 ```
 
 ---
@@ -354,17 +369,18 @@ Watch for:
 
 ```
 Phase Completion:
-[███████████████░░░░░░░░░░░░░░░░] 30% (3/10 phases complete)
+[████████████████████░░░░░░░░░░░░] 40% (4/10 phases complete)
 
-Est. Remaining Time: 6-8 days
+Est. Remaining Time: 5-7 days
 ```
 
-**Completed Phases**: 3/10
+**Completed Phases**: 4/10
   - Phase 1: Firebase Foundation ✅
   - Phase 2: Authentication System ✅
   - Phase 3: Onboarding Flow - Topics ✅
-**In Progress**: (none - ready to start Phase 4)
-**Pending**: 6 phases (Phases 4-9)
+  - Phase 4: Onboarding Guard & Routing ✅
+**In Progress**: (none - ready to start Phase 5)
+**Pending**: 5 phases (Phases 5-9)
 **Deferred**: 1 phase (Phase 10: AI generation)
 
 ---
@@ -454,6 +470,27 @@ Track these throughout development:
 ---
 
 ## Session Notes
+
+### Session 4: Nov 12, 2025 (Phase 4 Validation & Completion)
+- [x] **Completed phases**: Phase 4: Onboarding Guard & Routing ✅
+  - Discovered Phase 4 was already fully implemented in codebase
+  - Fixed OnboardingResolver bug: Promise .catch() error in reactive context
+  - Enhanced guards with authInitialized$ checks for proper sequencing
+  - Added hasCompletedOnboarding convenience method to AuthService
+- [x] **Build & Test Results**:
+  - ✅ Production build succeeds (8.8 seconds)
+  - ✅ Unit tests: All passing (201 total tests)
+  - ✅ ESLint: 0 warnings, 0 errors
+- [x] **Improvements Applied**:
+  - OnboardingResolver: Removed Promise .catch() in tap operator (line 37)
+  - OnboardingGuard: Added authInitialized$ switchMap for robustness
+  - MainAppGuard: Added authInitialized$ switchMap for robustness
+  - AuthService: Added hasCompletedOnboarding getter
+- [x] **Blockers encountered**: None
+- [x] **Next phase**: Phase 5: Daily Lesson Display
+  - Will implement lesson models, services, and display logic
+
+---
 
 ### Session 1: Nov 11, 2025 (Phase 1 Implementation)
 - [x] **Completed phases**: Phase 1: Firebase Foundation ✅

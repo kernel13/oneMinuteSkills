@@ -69,6 +69,13 @@ export class AuthService {
   }
 
   /**
+   * Check if current user has completed onboarding
+   */
+  get hasCompletedOnboarding(): boolean {
+    return this.currentUser?.onboardingComplete ?? false;
+  }
+
+  /**
    * Initialize authentication
    * Should be called after Firebase is initialized
    */

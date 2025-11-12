@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, switchMap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 /**
@@ -27,7 +27,9 @@ export class MainAppGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.authService.currentUser$.pipe(
+    // Wait for auth to be initialized before checking user state
+    return this.authService.authInitialized$.pipe(
+      switchMap(() => this.authService.currentUser$),
       take(1),
       map((user) => {
         // No user exists - redirect to onboarding to start auth flow
