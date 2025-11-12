@@ -1,0 +1,394 @@
+.home-container {
+  --background: #f8f9fa;
+}
+
+// Loading State
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+
+  ion-spinner {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: #666;
+    font-size: 1rem;
+  }
+}
+
+// Error Card
+.error-card {
+  margin: 1rem;
+  background: #fee;
+  border-left: 4px solid #ef4444;
+
+  ion-icon {
+    color: #ef4444;
+    margin-right: 0.5rem;
+  }
+}
+
+// Main Content
+.lesson-content {
+  padding: 1rem;
+  padding-top: 0;
+}
+
+// Stats Header
+.stats-header {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+
+.stat-item {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// XP Progress Section
+.xp-progress-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.xp-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.xp-bar {
+  height: 8px;
+  border-radius: 4px;
+  --buffer-background: #f0f0f0;
+
+  ::ng-deep .progress-inner {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  }
+}
+
+// Lesson Card
+.lesson-card {
+  margin: 1rem 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+
+  ion-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    --background: transparent;
+  }
+
+  ion-card-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  ion-card-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+  }
+}
+
+.lesson-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  padding-bottom: 0;
+  gap: 1rem;
+}
+
+.lesson-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
+  ion-chip {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+}
+
+.difficulty-badge {
+  --background: #667eea;
+  --color: white;
+}
+
+.category-badge {
+  --background: rgba(255, 255, 255, 0.2);
+  --color: white;
+}
+
+.xp-reward {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+
+  ion-icon {
+    font-size: 1.1rem;
+  }
+}
+
+// Lesson Body Content
+.lesson-body {
+  background: white;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.lesson-text {
+  margin-bottom: 1.5rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+
+  p {
+    margin: 0 0 1rem 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.key-points,
+.examples {
+  margin-bottom: 1.5rem;
+
+  h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 0.75rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #667eea;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    list-style: none;
+
+    li {
+      margin-bottom: 0.5rem;
+      padding-left: 1rem;
+      position: relative;
+
+      &::before {
+        content: '’';
+        position: absolute;
+        left: 0;
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.examples {
+  ul li {
+    code {
+      background: #f5f5f5;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: #d73a49;
+    }
+  }
+}
+
+.lesson-meta-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+  color: #999;
+  font-size: 0.85rem;
+
+  ion-icon {
+    font-size: 1rem;
+  }
+}
+
+// Completion Section
+.completion-section {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.complete-button {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --border-radius: 12px;
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  &:disabled {
+    --background: #ccc;
+  }
+}
+
+.completion-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  background: #f0f9ff;
+  border: 2px solid #10b981;
+  border-radius: 12px;
+  text-align: center;
+  animation: slideInUp 0.3s ease-out;
+
+  ion-icon {
+    font-size: 2.5rem;
+    color: #10b981;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    color: #10b981;
+    font-weight: 600;
+  }
+}
+
+.completion-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  gap: 1rem;
+
+  ion-spinner {
+    --color: #667eea;
+  }
+
+  p {
+    margin: 0;
+    color: #667eea;
+    font-weight: 500;
+  }
+}
+
+// Empty State
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+
+  ion-icon {
+    font-size: 3rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+  }
+
+  p {
+    margin: 0;
+    color: #999;
+  }
+}
+
+// Animations
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Mobile Responsiveness
+@media (max-width: 480px) {
+  .stats-header {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lesson-card {
+    margin: 0.75rem 0;
+    border-radius: 12px;
+  }
+
+  .lesson-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .xp-reward {
+    align-self: flex-start;
+  }
+
+  .lesson-body {
+    font-size: 0.9rem;
+  }
+}
