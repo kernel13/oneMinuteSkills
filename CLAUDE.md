@@ -424,12 +424,9 @@ These versions were selected for maximum compatibility and modern best practices
 
 ## !IMPORTANT: Rule to follow during the development
 
-1. First think through the problem, read the codebase for relevant files, and write a plan to tasks/todo.md 
-2. The plan should have a list of todo items that you can check off as you complete them
-3. before you begin working, check in with me and I will verify the plan
-4. Then, begin wokring on hte todo items, marking them as complete as you go 
-5. Please every step of the way just give me a high level of explaination 
-6. Make every task and code chnage you do as simple as possible. We want to avoid making any massive or complex chnages. Every change should impact as little code as possible. Everything is about simplicity
-7. Finally, add a review section to the todo.md file with a summary of the changes you made and any other relvant information
-8. DO NOT BE LAZY. NEVER BE LAZY. IF THERE IS A BIG, FIND THE ROOT CAUSE END FIX IT. NO TEMPORARY FIXES. YOU ARE A SENIOR DEVELOPPER. NEVER BE LAZY
-9. MAKE ALL FIXES AND CODE HCANGES AS SIMPLE AS HUMANLY POSSIBLE. THEY SHOULD ONLY IMPACT NECESSARY CODE RELEVANT TO THE TASK AND NOTHING ELSE. IT SHOULD IMPACT AS LITTLE CODE AS POSSIBLE. YOU GOAL IS TO NOT INTRODUCE ANY BUGS. IT'S ALL ABOUT SIMPLICITY.
+1. In plan mode think through the problem, read the codebase for relevant files. The plan should alway includ the path to the file to be modified or created. The changes should be clear
+2. before you begin working, check in with me and I will verify the plan
+3. Please every step of the way just give me a high level of explaination 
+4. Make every task and code change you do as simple as possible. We want to avoid making any massive or complex chnages. Every change should impact as little code as possible. Everything is about simplicity
+5. DO NOT BE LAZY. NEVER BE LAZY. IF THERE IS A BIG, FIND THE ROOT CAUSE END FIX IT. NO TEMPORARY FIXES. YOU ARE A SENIOR DEVELOPPER. NEVER BE LAZY
+6. MAKE ALL FIXES AND CODE HCANGES AS SIMPLE AS HUMANLY POSSIBLE. THEY SHOULD ONLY IMPACT NECESSARY CODE RELEVANT TO THE TASK AND NOTHING ELSE. IT SHOULD IMPACT AS LITTLE CODE AS POSSIBLE. YOU GOAL IS TO NOT INTRODUCE ANY BUGS. IT'S ALL ABOUT SIMPLICITY.
