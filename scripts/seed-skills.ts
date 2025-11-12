@@ -17,7 +17,7 @@ import * as admin from 'firebase-admin';
 import { SkillCategory, SkillDifficulty } from '../src/app/models/skill.model';
 
 // Initialize Firebase Admin
-const projectId = process.env['FIREBASE_PROJECT_ID'] || 'oneminute-skill-dev';
+const projectId = process.env['FIREBASE_PROJECT_ID'] || 'oneminuteskill-792b7';
 
 let app: admin.app.App;
 if (process.env['FIRESTORE_EMULATOR_HOST']) {
