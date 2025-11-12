@@ -7,7 +7,7 @@ export const environment = {
   firebase: {
     apiKey: 'demo-api-key',
     authDomain: 'oneminute-skill-dev.firebaseapp.com',
-    projectId: 'oneminute-skill-dev',
+    projectId: 'oneminuteskill-792b7',
     storageBucket: 'oneminute-skill-dev.appspot.com',
     messagingSenderId: '123456789012',
     appId: '1:123456789012:web:abcdef1234567890'
