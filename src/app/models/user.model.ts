@@ -28,6 +28,10 @@ export interface User {
   notificationsEnabled: boolean;
   theme?: 'light' | 'dark' | 'system';
   language?: string;
+
+  // Lesson tracking
+  lastLessonCompletedDate?: Date; // Date of last lesson completion
+  dailyLessonId?: string; // ID of today's lesson (for caching)
 }
 
 /**

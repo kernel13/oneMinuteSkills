@@ -17,15 +17,15 @@ import * as admin from 'firebase-admin';
 import { SkillCategory, SkillDifficulty } from '../src/app/models/skill.model';
 
 // Initialize Firebase Admin
-const projectId = process.env.FIREBASE_PROJECT_ID || 'oneminute-skill-dev';
+const projectId = process.env['FIREBASE_PROJECT_ID'] || 'oneminuteskill-792b7';
 
 let app: admin.app.App;
-if (process.env.FIRESTORE_EMULATOR_HOST) {
-  console.log('🔧 Using Firestore Emulator:', process.env.FIRESTORE_EMULATOR_HOST);
+if (process.env['FIRESTORE_EMULATOR_HOST']) {
+  console.log('🔧 Using Firestore Emulator:', process.env['FIRESTORE_EMULATOR_HOST']);
   app = admin.initializeApp({
     projectId: projectId,
   });
-} else if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+} else if (process.env['GOOGLE_APPLICATION_CREDENTIALS']) {
   console.log('🔑 Using Service Account credentials');
   app = admin.initializeApp({
     credential: admin.credential.applicationDefault(),

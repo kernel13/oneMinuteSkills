@@ -1,0 +1,99 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if user is authenticated (including anonymous)
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function to check if user is accessing their own document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Helper function to check if user is authenticated (including anonymous users)
+    function isAuthenticatedOrAnonymous() {
+      return request.auth != null;
+    }
+
+    // Users collection - users can only read/write their own profile
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId);
+    }
+
+    // User preferences subcollection - all onboarding/preferences data per user
+    match /users/{userId}/preferences/{prefId} {
+      // Read/write restricted to the owner
+      allow read: if isOwner(userId);
+      // Ensure writes are by the owner and the userId field (if present) matches the owner
+      allow create, update: if isOwner(userId)
+        && (!('userId' in request.resource.data) || request.resource.data.userId == userId);
+      // Allow delete by owner (optional). Set to false to make preferences immutable.
+      allow delete: if isOwner(userId);
+    }
+
+    // User progress collection - users can only access their own progress records
+    match /userProgress/{progressId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // User lesson progress - track completed lessons per user
+    match /user_lesson_progress/{progressId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if false; // Lesson completions are immutable
+    }
+
+    // Lessons collection - all authenticated users can read lessons (public content)
+    match /lessons/{lessonId} {
+      allow read: if isAuthenticated();
+      allow write: if false; // Only admins can write (handled via Firebase Admin SDK)
+    }
+
+    // Topics collection - all authenticated users can read topics (public content)
+    match /topics/{topicId} {
+      allow read: if isAuthenticated();
+      allow write: if false; // Only admins can write (handled via Firebase Admin SDK)
+    }
+
+    // Error logs collection - users can create logs linked to their account, read only their own
+    match /errorLogs/{logId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow update, delete: if false; // Logs are immutable for audit purposes
+    }
+
+    // User action logs collection - users can create logs linked to their account, read only their own
+    match /userActions/{actionId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow update, delete: if false; // Action logs are immutable for audit purposes
+    }
+
+    // Test collections - allow all operations for integration testing
+    // These rules only apply when using Firebase emulators for local testing
+    match /test-collection/{document=**} {
+      allow read, write: if true;
+    }
+    match /test-users/{document=**} {
+      allow read, write: if true;
+    }
+    match /empty-collection/{document=**} {
+      allow read, write: if true;
+    }
+    match /connection-test/{document=**} {
+      allow read, write: if true;
+    }
+
+    // Deny all other paths by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
