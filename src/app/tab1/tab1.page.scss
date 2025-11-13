@@ -37,72 +37,6 @@
 // Main Content
 .lesson-content {
   padding: 1rem;
-  padding-top: 0;
-}
-
-// Stats Header
-.stats-header {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-  margin-top: 1rem;
-}
-
-.stat-item {
-  background: white;
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  }
-}
-
-.stat-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #667eea;
-  margin-bottom: 0.25rem;
-}
-
-.stat-label {
-  font-size: 0.75rem;
-  color: #999;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-// XP Progress Section
-.xp-progress-section {
-  background: white;
-  border-radius: 12px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.xp-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.875rem;
-  color: #666;
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-}
-
-.xp-bar {
-  height: 8px;
-  border-radius: 4px;
-  --buffer-background: #f0f0f0;
-
-  ::ng-deep .progress-inner {
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-  }
 }
 
 // Lesson Card
@@ -226,7 +160,7 @@
       position: relative;
 
       &::before {
-        content: '’';
+        content: 'ï¿½';
         position: absolute;
         left: 0;
         color: #667eea;
@@ -370,10 +304,6 @@
 
 // Mobile Responsiveness
 @media (max-width: 480px) {
-  .stats-header {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .lesson-card {
     margin: 0.75rem 0;
     border-radius: 12px;

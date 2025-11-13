@@ -29,39 +29,6 @@
 
   <!-- Main Content -->
   <div *ngIf="!loading && !error && currentUser && dailyLesson" class="lesson-content">
-    <!-- User Stats Header -->
-    <div class="stats-header">
-      <div class="stat-item">
-        <div class="stat-value">{{ currentUser.level }}</div>
-        <div class="stat-label">Level</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">{{ currentUser.xp }}</div>
-        <div class="stat-label">XP</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">{{ currentUser.currentStreak }}</div>
-        <div class="stat-label">Streak</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">{{ currentUser.totalLessonsCompleted }}</div>
-        <div class="stat-label">Completed</div>
-      </div>
-    </div>
-
-    <!-- XP Progress Bar -->
-    <div class="xp-progress-section">
-      <div class="xp-info">
-        <span>Level {{ currentUser.level }}</span>
-        <span>{{ xpForNextLevel }} XP to next level</span>
-      </div>
-      <ion-progress-bar
-        [value]="xpProgress / 100"
-        color="primary"
-        class="xp-bar"
-      ></ion-progress-bar>
-    </div>
-
     <!-- Daily Lesson Card -->
     <ion-card class="lesson-card">
       <!-- Lesson Header with Badge -->
