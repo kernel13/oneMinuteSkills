@@ -1,17 +1,207 @@
-<ion-header [translucent]="true">
+<ion-header translucent>
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title>Your Progress</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content fullscreen class="progress-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <ion-spinner name="circles"></ion-spinner>
+    <p>Loading your progress...</p>
+  </div>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <!-- Error State -->
+  <ion-card *ngIf="error && !loading" class="error-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="alert-circle"></ion-icon>
+        Error
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ error }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading && !error && currentUser" class="progress-content">
+    <!-- Stats Cards Section -->
+    <div class="stats-section">
+      <h2>Your Stats</h2>
+      <ion-grid>
+        <!-- Level Card -->
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-card class="stat-card level-card">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="trophy"></ion-icon>
+                </div>
+                <div class="stat-value-large">{{ currentUser.level }}</div>
+                <div class="stat-label">Level</div>
+                <p class="stat-sublabel">{{ currentUser.xp }} total XP</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <!-- XP Card -->
+          <ion-col size="12" size-md="6">
+            <ion-card class="stat-card xp-card">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="flash"></ion-icon>
+                </div>
+                <div class="stat-value-large">{{ xpProgress.current }}/{{ xpProgress.needed }}</div>
+                <div class="stat-label">XP Progress</div>
+                <ion-progress-bar
+                  [value]="getXpProgressPercent() / 100"
+                  color="warning"
+                  class="xp-bar-mini"
+                ></ion-progress-bar>
+                <p class="stat-sublabel">{{ xpForNextLevel }} XP to next</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <!-- Streak Card -->
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-card class="stat-card streak-card">
+              <ion-card-content>
+                <div class="stat-icon">
+                  {{ streakEmoji }}
+                </div>
+                <div class="stat-value-large">{{ currentUser.currentStreak }}</div>
+                <div class="stat-label">Current Streak</div>
+                <p class="stat-sublabel">{{ getLessonsToNextLevel() }} more to level up</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <!-- Longest Streak Card -->
+          <ion-col size="12" size-md="6">
+            <ion-card class="stat-card longest-streak-card">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="flame"></ion-icon>
+                </div>
+                <div class="stat-value-large">{{ currentUser.longestStreak }}</div>
+                <div class="stat-label">Longest Streak</div>
+                <p class="stat-sublabel">Personal best</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <!-- Lessons Card -->
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-card class="stat-card lessons-card">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="checkmark-circle"></ion-icon>
+                </div>
+                <div class="stat-value-large">{{ getCompletedLessons() }}</div>
+                <div class="stat-label">Lessons Completed</div>
+                <p class="stat-sublabel">Keep going!</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <!-- Average Daily Card -->
+          <ion-col size="12" size-md="6">
+            <ion-card class="stat-card average-card">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="trending-up"></ion-icon>
+                </div>
+                <div class="stat-value-large">{{ (getCompletedLessons() / Math.max(currentUser.currentStreak, 1)) | number: '1.1-1' }}</div>
+                <div class="stat-label">Avg Per Day</div>
+                <p class="stat-sublabel">This streak</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- XP Progress Section -->
+    <ion-card class="progress-section">
+      <ion-card-header>
+        <ion-card-title>Level {{ currentUser.level }} Progress</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="progress-details">
+          <div class="progress-label">
+            <span>{{ xpProgress.current }} XP</span>
+            <span class="progress-target">{{ xpProgress.needed }} XP</span>
+          </div>
+          <ion-progress-bar
+            [value]="getXpProgressPercent() / 100"
+            color="primary"
+            class="xp-bar"
+          ></ion-progress-bar>
+          <div class="progress-percent">{{ getXpProgressPercent() }}% to Level {{ currentUser.level + 1 }}</div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Level Milestones Section -->
+    <ion-card class="milestones-section">
+      <ion-card-header>
+        <ion-card-title>Level Milestones</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="milestone-grid">
+          <div
+            *ngFor="let level of levelMilestones"
+            [ngClass]="getMilestoneClass(level)"
+            class="milestone-item"
+          >
+            <div class="milestone-badge">
+              <ion-icon
+                *ngIf="isMilestoneReached(level)"
+                name="checkmark"
+                class="milestone-check"
+              ></ion-icon>
+              <span *ngIf="!isMilestoneReached(level)">{{ level }}</span>
+            </div>
+            <div class="milestone-label">Level {{ level }}</div>
+            <div class="milestone-xp">{{ gamificationService.getTotalXpForLevel(level) }} XP</div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Quick Stats -->
+    <ion-card class="quick-stats">
+      <ion-card-header>
+        <ion-card-title>Quick Summary</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <p>Lessons to next level</p>
+            </ion-label>
+            <ion-note slot="end">{{ getLessonsToNextLevel() }}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p>Estimated time to level up</p>
+            </ion-label>
+            <ion-note slot="end">{{ getLessonsToNextLevel() }} days</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p>Total time invested</p>
+            </ion-label>
+            <ion-note slot="end">{{ getCompletedLessons() }} min</ion-note>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

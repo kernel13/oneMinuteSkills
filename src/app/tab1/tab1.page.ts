@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { LessonService } from '../services/lesson.service';
 import { AuthService } from '../services/auth.service';
 import { Lesson } from '../models/lesson.model';
-import { User, calculateXpForNextLevel } from '../models/user.model';
+import { User } from '../models/user.model';
 import { getDifficultyColor, getDifficultyLabel, getCategoryLabel, getCategoryIcon } from '../models/lesson.model';
 
 /**
@@ -30,23 +30,6 @@ export class Tab1Page implements OnInit, OnDestroy {
   isCompletingLesson = false;
   lessonCompleted = false;
   completionMessage = '';
-
-  /**
-   * Get formatted XP for next level
-   */
-  get xpForNextLevel(): number {
-    if (!this.currentUser) return 0;
-    return calculateXpForNextLevel(this.currentUser.xp);
-  }
-
-  /**
-   * Get XP progress percentage
-   */
-  get xpProgress(): number {
-    if (!this.currentUser) return 0;
-    const xpInLevel = this.currentUser.xp % 100;
-    return (xpInLevel / 100) * 100;
-  }
 
   /**
    * Get difficulty color for display
