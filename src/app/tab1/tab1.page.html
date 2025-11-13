@@ -33,7 +33,13 @@
     <ion-card class="lesson-card">
       <!-- Lesson Header with Integrated Badges -->
       <ion-card-header class="lesson-card-header">
-        <!-- Badges - Floating on top -->
+        <!-- Title and Subtitle -->
+        <div class="lesson-header-content">
+          <ion-card-title class="lesson-title">{{ dailyLesson.title }}</ion-card-title>
+          <ion-card-subtitle>{{ dailyLesson.description }}</ion-card-subtitle>
+        </div>
+
+        <!-- Badges - Below title -->
         <div class="lesson-badges-top">
           <ion-chip
             [style.--background]="getDifficultyColor(dailyLesson.difficulty)"
@@ -45,12 +51,6 @@
             <ion-icon name="star"></ion-icon>
             <span>{{ dailyLesson.xpReward }} XP</span>
           </div>
-        </div>
-
-        <!-- Title and Subtitle -->
-        <div class="lesson-header-content">
-          <ion-card-title class="lesson-title">{{ dailyLesson.title }}</ion-card-title>
-          <ion-card-subtitle>{{ dailyLesson.description }}</ion-card-subtitle>
         </div>
       </ion-card-header>
 
