@@ -33,22 +33,22 @@
     <ion-card class="lesson-card">
       <!-- Lesson Header with Badge -->
       <div class="lesson-header">
-        <div class="lesson-meta">
+        <div class="lesson-badges-top">
           <ion-chip
             [style.--background]="getDifficultyColor(dailyLesson.difficulty)"
             class="difficulty-badge"
           >
             {{ getDifficultyLabel(dailyLesson.difficulty) }}
           </ion-chip>
-          <ion-chip class="category-badge">
-            <ion-icon [name]="getCategoryIcon(dailyLesson.category)"></ion-icon>
-            {{ getCategoryLabel(dailyLesson.category) }}
-          </ion-chip>
+          <div class="xp-reward">
+            <ion-icon name="star"></ion-icon>
+            <span>{{ dailyLesson.xpReward }} XP</span>
+          </div>
         </div>
-        <div class="xp-reward">
-          <ion-icon name="star"></ion-icon>
-          <span>{{ dailyLesson.xpReward }} XP</span>
-        </div>
+        <ion-chip class="category-badge">
+          <ion-icon [name]="getCategoryIcon(dailyLesson.category)"></ion-icon>
+          {{ getCategoryLabel(dailyLesson.category) }}
+        </ion-chip>
       </div>
 
       <!-- Lesson Content -->
