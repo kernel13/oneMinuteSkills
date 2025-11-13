@@ -57,7 +57,7 @@
       <!-- Lesson Body Content -->
       <ion-card-content class="lesson-body">
         <!-- Lesson Content with Markdown Rendering -->
-        <div class="lesson-text" [innerHTML]="dailyLesson.content | markdown"></div>
+        <div class="lesson-text" [innerHTML]="(dailyLesson.content || '') | markdown"></div>
 
         <!-- Key Points -->
         <div *ngIf="dailyLesson.keyPoints && dailyLesson.keyPoints.length > 0" class="key-points">

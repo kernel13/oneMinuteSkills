@@ -13,7 +13,7 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    MarkdownModule.forChild(),
+    MarkdownModule,
     ExploreContainerComponentModule,
     Tab1PageRoutingModule
   ],
