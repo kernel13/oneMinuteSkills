@@ -29,10 +29,11 @@
 
   <!-- Main Content -->
   <div *ngIf="!loading && !error && currentUser && dailyLesson" class="lesson-content">
-    <!-- Daily Lesson Card -->
+    <!-- Daily Lesson Card - Fullscreen -->
     <ion-card class="lesson-card">
-      <!-- Lesson Header with Badge -->
-      <div class="lesson-header">
+      <!-- Lesson Header with Integrated Badges -->
+      <ion-card-header class="lesson-card-header">
+        <!-- Badges - Floating on top -->
         <div class="lesson-badges-top">
           <ion-chip
             [style.--background]="getDifficultyColor(dailyLesson.difficulty)"
@@ -45,20 +46,18 @@
             <span>{{ dailyLesson.xpReward }} XP</span>
           </div>
         </div>
-        
-      </div>
 
-      <!-- Lesson Content -->
-      <ion-card-header>
-        <ion-card-title class="lesson-title">{{ dailyLesson.title }}</ion-card-title>
-        <ion-card-subtitle>{{ dailyLesson.description }}</ion-card-subtitle>
+        <!-- Title and Subtitle -->
+        <div class="lesson-header-content">
+          <ion-card-title class="lesson-title">{{ dailyLesson.title }}</ion-card-title>
+          <ion-card-subtitle>{{ dailyLesson.description }}</ion-card-subtitle>
+        </div>
       </ion-card-header>
 
+      <!-- Lesson Body Content -->
       <ion-card-content class="lesson-body">
-        <!-- Lesson Content -->
-        <div class="lesson-text">
-          <p>{{ dailyLesson.content }}</p>
-        </div>
+        <!-- Lesson Content with Markdown Rendering -->
+        <div class="lesson-text" [innerHTML]="dailyLesson.content | markdown"></div>
 
         <!-- Key Points -->
         <div *ngIf="dailyLesson.keyPoints && dailyLesson.keyPoints.length > 0" class="key-points">
@@ -84,37 +83,37 @@
           <span>{{ dailyLesson.estimatedMinutes }} min read</span>
         </div>
       </ion-card-content>
+
+      <!-- Completion Section -->
+      <div class="completion-section">
+        <!-- Completion Message -->
+        <div *ngIf="lessonCompleted" class="completion-success">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <p>{{ completionMessage }}</p>
+        </div>
+
+        <!-- Complete Button -->
+        <ion-button
+          *ngIf="!lessonCompleted"
+          expand="block"
+          shape="round"
+          size="large"
+          color="primary"
+          (click)="completeLesson()"
+          [disabled]="!canCompleteLesson"
+          class="complete-button"
+        >
+          <ion-icon name="checkmark-done" slot="start"></ion-icon>
+          Complete Lesson
+        </ion-button>
+
+        <!-- Loading State for Completion -->
+        <div *ngIf="isCompletingLesson" class="completion-loading">
+          <ion-spinner name="crescent" color="primary"></ion-spinner>
+          <p>Saving your progress...</p>
+        </div>
+      </div>
     </ion-card>
-
-    <!-- Completion Section -->
-    <div class="completion-section">
-      <!-- Completion Message -->
-      <div *ngIf="lessonCompleted" class="completion-success">
-        <ion-icon name="checkmark-circle"></ion-icon>
-        <p>{{ completionMessage }}</p>
-      </div>
-
-      <!-- Complete Button -->
-      <ion-button
-        *ngIf="!lessonCompleted"
-        expand="block"
-        shape="round"
-        size="large"
-        color="primary"
-        (click)="completeLesson()"
-        [disabled]="!canCompleteLesson"
-        class="complete-button"
-      >
-        <ion-icon name="checkmark-done" slot="start"></ion-icon>
-        Complete Lesson
-      </ion-button>
-
-      <!-- Loading State for Completion -->
-      <div *ngIf="isCompletingLesson" class="completion-loading">
-        <ion-spinner name="crescent" color="primary"></ion-spinner>
-        <p>Saving your progress...</p>
-      </div>
-    </div>
   </div>
 
   <!-- Empty State -->
