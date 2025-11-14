@@ -269,4 +269,23 @@ export class AuthService {
       }
     });
   }
+
+  /**
+   * Sign out current user
+   */
+  async signOut(): Promise<void> {
+    try {
+      const auth = this.firebaseService.getAuth();
+      if (!auth) {
+        throw new Error('Firebase Auth not initialized');
+      }
+
+      await auth.signOut();
+      this.currentUserSubject.next(null);
+      console.log('[AuthService] User signed out');
+    } catch (error) {
+      console.error('[AuthService] Error signing out:', error);
+      throw error;
+    }
+  }
 }
