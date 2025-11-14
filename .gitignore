@@ -72,3 +72,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Firebase Functions
+/functions/node_modules/
+/functions/lib/
+/functions/.env
+/functions/.runtimeconfig.json

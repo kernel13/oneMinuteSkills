@@ -2,6 +2,11 @@
   "firestore": {
     "rules": "firestore.rules"
   },
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20",
+    "codebase": "default"
+  },
   "emulators": {
     "firestore": {
       "host": "127.0.0.1",
@@ -14,6 +19,10 @@
     "storage": {
       "host": "127.0.0.1",
       "port": 9199
+    },
+    "functions": {
+      "host": "127.0.0.1",
+      "port": 5001
     },
     "ui": {
       "enabled": true,
