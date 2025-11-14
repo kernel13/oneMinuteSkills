@@ -14,7 +14,20 @@
  */
 
 import * as admin from 'firebase-admin';
-import { SkillCategory } from '../src/app/models/skill.model';
+
+// Skill categories (copied from skill.model.ts to avoid module resolution issues)
+enum SkillCategory {
+  GENERAL_CONCEPTS = 'General Concepts',
+  OPERATING_SYSTEMS = 'Operating Systems',
+  PROGRAMMING_LANGUAGES = 'Programming Languages',
+  WEB_TECHNOLOGIES = 'Web Technologies',
+  CI_CD_TOOLS = 'CI/CD Tools',
+  CLOUD_PLATFORMS = 'Cloud Platforms',
+  INFRASTRUCTURE_AS_CODE = 'Infrastructure as Code',
+  CONTAINERIZATION = 'Containerization & Orchestration',
+  SECURITY = 'Security',
+  MONITORING_LOGGING = 'Monitoring & Logging',
+}
 
 // Initialize Firebase Admin
 const projectId = process.env['FIREBASE_PROJECT_ID'] || 'oneminuteskill-792b7';

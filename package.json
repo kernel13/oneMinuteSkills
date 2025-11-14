@@ -11,7 +11,12 @@
     "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "seed:compile": "npx tsc --project scripts/tsconfig.json",
+    "seed:skills": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node scripts/dist/scripts/seed-skills.js",
+    "seed:topics": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node scripts/dist/scripts/seed-topics-from-skills.js",
+    "seed:lessons": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node scripts/dist/scripts/seed-lessons.js",
+    "seed:all": "npm run seed:compile && npm run seed:skills && npm run seed:topics && npm run seed:lessons"
   },
   "private": true,
   "dependencies": {
