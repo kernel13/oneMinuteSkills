@@ -3,6 +3,7 @@ import { FirebaseService } from './firebase.service';
 import { User, createUser } from '../models/user.model';
 import {
   signInAnonymously,
+  signOut as firebaseSignOut,
   Auth,
   UserCredential,
   onAuthStateChanged,
@@ -268,5 +269,24 @@ export class AuthService {
         });
       }
     });
+  }
+
+  /**
+   * Sign out current user
+   */
+  async signOut(): Promise<void> {
+    try {
+      const auth = this.firebaseService.getAuth();
+      if (!auth) {
+        throw new Error('Firebase Auth not initialized');
+      }
+
+      await firebaseSignOut(auth);
+      this.currentUserSubject.next(null);
+      console.log('[AuthService] User signed out');
+    } catch (error) {
+      console.error('[AuthService] Error signing out:', error);
+      throw error;
+    }
   }
 }

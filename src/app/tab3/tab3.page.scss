@@ -1,0 +1,274 @@
+.profile-container {
+  --background: #f8f9fa;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 16px;
+
+  ion-spinner {
+    height: 60px;
+    width: 60px;
+  }
+
+  p {
+    color: #666;
+    font-size: 14px;
+  }
+}
+
+.error-card {
+  margin: 16px;
+  border-left: 4px solid #ff3b30;
+
+  ion-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ff3b30;
+  }
+}
+
+.profile-content {
+  padding-bottom: 20px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 16px;
+  background: white;
+  border-radius: 12px;
+  margin: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  .avatar-container {
+    flex-shrink: 0;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+
+  .user-info {
+    flex: 1;
+
+    h2 {
+      margin: 0 0 4px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .user-id {
+      margin: 0;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+  }
+}
+
+.stats-section {
+  padding: 0 16px 16px;
+
+  h3 {
+    margin: 16px 0 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .stat-card {
+    margin-bottom: 12px;
+    background: white;
+
+    ion-card-content {
+      padding: 16px;
+    }
+  }
+
+  .stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 16px;
+  }
+
+  .stat-item {
+    flex: 1;
+    text-align: center;
+
+    .stat-label {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #667eea;
+
+      .streak-emoji {
+        margin-left: 4px;
+        font-size: 24px;
+      }
+    }
+
+    .stat-value-large {
+      font-size: 40px;
+      font-weight: 700;
+      color: #667eea;
+    }
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 50px;
+    background: #e5e7eb;
+  }
+
+  .progress-section {
+    margin-top: 16px;
+
+    .progress-label {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    ion-progress-bar {
+      height: 6px;
+      border-radius: 3px;
+    }
+  }
+}
+
+.preferences-section {
+  padding: 0 16px 16px;
+
+  h3 {
+    margin: 16px 0 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  ion-card {
+    margin-bottom: 12px;
+    background: white;
+  }
+
+  ion-card-header {
+    padding-bottom: 12px;
+  }
+
+  ion-card-title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .topics-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .topic-chip {
+    background: #667eea;
+    color: white;
+  }
+
+  .empty-message {
+    color: #9ca3af;
+    font-size: 14px;
+    margin: 12px 0;
+  }
+
+  ion-button {
+    margin-top: 12px;
+  }
+
+  // Notification section styles
+  .reminder-time-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+
+    ion-item {
+      --padding-start: 0;
+      --padding-end: 0;
+      --inner-padding-end: 0;
+    }
+
+    ion-input {
+      padding: 8px;
+    }
+  }
+}
+
+.account-section {
+  padding: 0 16px 16px;
+
+  h3 {
+    margin: 16px 0 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  ion-card {
+    margin-bottom: 12px;
+    background: white;
+  }
+
+  .account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+
+      .info-label {
+        color: #9ca3af;
+        font-weight: 500;
+      }
+
+      ion-badge {
+        padding: 4px 12px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .sign-out-button {
+    margin-top: 16px;
+  }
+}
+
+.footer-spacing {
+  height: 20px;
+}
