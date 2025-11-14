@@ -96,4 +96,76 @@ describe('AuthService', () => {
   it('should have method to initialize auth', () => {
     expect(service.initializeAuth).toBeDefined();
   });
+
+  describe('signOut', () => {
+    it('should be defined', () => {
+      expect(service.signOut).toBeDefined();
+    });
+
+    it('should throw error if Firebase Auth not initialized', async () => {
+      firebaseServiceMock.getAuth.and.returnValue(null);
+
+      try {
+        await service.signOut();
+        fail('should have thrown error');
+      } catch (error) {
+        expect((error as Error).message).toContain('Firebase Auth not initialized');
+      }
+    });
+
+    it('should call auth.signOut()', async () => {
+      const mockAuth = { signOut: jasmine.createSpy('signOut').and.returnValue(Promise.resolve()) };
+      firebaseServiceMock.getAuth.and.returnValue(mockAuth as any);
+
+      await service.signOut();
+
+      expect(mockAuth.signOut).toHaveBeenCalled();
+    });
+
+    it('should clear currentUser after sign out', async () => {
+      const mockAuth = { signOut: jasmine.createSpy('signOut').and.returnValue(Promise.resolve()) };
+      firebaseServiceMock.getAuth.and.returnValue(mockAuth as any);
+
+      // Set a user first
+      (service as any).currentUserSubject.next({ id: 'test-user' });
+      expect(service.currentUser).not.toBeNull();
+
+      // Sign out
+      await service.signOut();
+
+      expect(service.currentUser).toBeNull();
+    });
+
+    it('should emit null on currentUser$ observable after sign out', async (done) => {
+      const mockAuth = { signOut: jasmine.createSpy('signOut').and.returnValue(Promise.resolve()) };
+      firebaseServiceMock.getAuth.and.returnValue(mockAuth as any);
+
+      // Set initial user
+      (service as any).currentUserSubject.next({ id: 'test-user' } as User);
+
+      // Subscribe to observable
+      service.currentUser$.subscribe((user) => {
+        if (user === null) {
+          done();
+        }
+      });
+
+      // Sign out
+      await service.signOut();
+    });
+
+    it('should throw error if auth.signOut() fails', async () => {
+      const mockAuth = {
+        signOut: jasmine.createSpy('signOut').and.returnValue(Promise.reject('Sign out failed'))
+      };
+      firebaseServiceMock.getAuth.and.returnValue(mockAuth as any);
+
+      try {
+        await service.signOut();
+        fail('should have thrown error');
+      } catch (error) {
+        expect(error).toBe('Sign out failed');
+      }
+    });
+  });
 });
